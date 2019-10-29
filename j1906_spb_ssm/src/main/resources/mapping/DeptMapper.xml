@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.j1906.mapper.DeptMapper">
+    <select id="findAll" resultType="com.qf.j1906.pojo.Dept">
+        select
+            deptno,dname,loc
+        from
+            dept
+        where
+            1=1
+    </select>
+    <insert id="save">
+        <selectKey keyColumn="deptno" keyProperty="deptno" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into dept(dname,loc) values(#{dname},#{loc})
+    </insert>
+    <update id="modify">
+        update Dept
+        <set>
+            <if test="deptno!=null">
+                deptno=#{deptno},
+            </if>
+            <if test="dname!=null">
+                dname=#{dname},
+            </if>
+            <if test="loc!=null">
+                loc=#{loc},
+            </if>
+        </set>
+        where deptno=#{deptno}
+    </update>
+    <select id="selectByName" resultType="com.qf.j1906.pojo.Dept">
+        select deptno,dname,loc from dept where dname=#{dname}
+    </select>
+    <select id="selectById" resultType="com.qf.j1906.pojo.Dept">
+        select deptno,dname,loc from dept where deptno=#{deptno}
+    </select>
+    <delete id="deleteDeptById" >
+        delete from dept where deptno=#{deptno}
+    </delete>
+</mapper>
